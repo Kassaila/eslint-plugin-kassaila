@@ -3,24 +3,37 @@
   "version": "0.1.0",
   "description": "Custom ESLint rules: jsdoc-comment-style, prefer-arrow-without-this, switch-case-braces",
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup",
     "test": "vitest",
     "test:run": "vitest run",
     "lint": "eslint .",
-    "prepublishOnly": "npm run build"
+    "lint:fix": "eslint . --fix",
+    "check:types": "tsc --noEmit",
+    "check:all": "npm run lint && npm run check:types && npm run test:run && npm run build",
+    "release:check": "npm run check:all && npm pack --dry-run",
+    "release:publish": "npm run release:check && npm publish",
+    "prepublishOnly": "npm run check:types && npm run test:run"
   },
   "keywords": [
     "eslint",
@@ -30,7 +43,19 @@
     "arrow-functions",
     "switch-case"
   ],
+  "author": "Kassaila",
   "license": "MIT",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kassaila/eslint-plugin-kassaila.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kassaila/eslint-plugin-kassaila/issues"
+  },
+  "homepage": "https://github.com/Kassaila/eslint-plugin-kassaila",
   "peerDependencies": {
     "eslint": "^9.0.0 || ^10.0.0"
   },
