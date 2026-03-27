@@ -6,7 +6,7 @@ repository.
 ## Overview
 
 ESLint plugin (`eslint-plugin-kassaila`) with three auto-fixable rules and shareable configs
-(`tsConfig`, `vueConfig`) for ESLint 9+/10+ flat config. Written in TypeScript, distributed as dual
+(`tsConfig`, `vueConfig`) for ESLint 9 / 10 flat config. Written in TypeScript, distributed as dual
 ESM/CJS.
 
 ## Commands
