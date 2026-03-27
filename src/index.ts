@@ -4,10 +4,12 @@ import jsdocCommentStyle from './rules/jsdoc-comment-style';
 import preferArrowWithoutThis from './rules/prefer-arrow-without-this';
 import switchCaseBraces from './rules/switch-case-braces';
 
-const plugin: ESLint.Plugin & { configs: Record<string, Linter.Config> } = {
+const plugin: ESLint.Plugin & {
+  configs: Record<string, Linter.Config | Linter.Config[]>;
+} = {
   meta: {
     name: 'eslint-plugin-kassaila',
-    version: '0.1.0',
+    version: '0.2.0',
   },
   rules: {
     'jsdoc-comment-style': jsdocCommentStyle as never,
