@@ -1,3 +1,5 @@
-node_modules
-dist
-DESCRIPTION.txt
+node_modules/
+dist/
+coverage/
+*.log
+.DS_Store

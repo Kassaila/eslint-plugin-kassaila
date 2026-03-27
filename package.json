@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-kassaila",
-  "version": "0.1.0",
-  "description": "Custom ESLint rules: jsdoc-comment-style, prefer-arrow-without-this, switch-case-braces",
+  "version": "0.2.0",
+  "description": "Custom ESLint rules and shareable configs for TypeScript and Vue projects",
   "type": "module",
   "sideEffects": false,
   "exports": {
@@ -13,6 +13,26 @@
       "require": {
         "types": "./dist/index.d.cts",
         "default": "./dist/index.cjs"
+      }
+    },
+    "./configs/ts": {
+      "import": {
+        "types": "./dist/configs/ts.d.ts",
+        "default": "./dist/configs/ts.js"
+      },
+      "require": {
+        "types": "./dist/configs/ts.d.cts",
+        "default": "./dist/configs/ts.cjs"
+      }
+    },
+    "./configs/vue": {
+      "import": {
+        "types": "./dist/configs/vue.d.ts",
+        "default": "./dist/configs/vue.js"
+      },
+      "require": {
+        "types": "./dist/configs/vue.d.cts",
+        "default": "./dist/configs/vue.cjs"
       }
     }
   },
@@ -29,16 +49,26 @@
     "test:run": "vitest run",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "check:types": "tsc --noEmit",
-    "check:all": "npm run lint && npm run check:types && npm run test:run && npm run build",
+    "check:all": "npm run format:check && npm run lint && npm run check:types && npm run test:run && npm run build",
     "release:check": "npm run check:all && npm pack --dry-run",
     "release:publish": "npm run release:check && npm publish",
-    "prepublishOnly": "npm run check:types && npm run test:run"
+    "prepublishOnly": "npm run check:types && npm run test:run",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,js}": "eslint --fix",
+    "*.{ts,js,json,md}": "prettier --write"
   },
   "keywords": [
     "eslint",
     "eslintplugin",
     "eslint-plugin",
+    "eslint-config",
+    "typescript",
+    "vue",
     "jsdoc",
     "arrow-functions",
     "switch-case"
@@ -57,17 +87,65 @@
   },
   "homepage": "https://github.com/Kassaila/eslint-plugin-kassaila",
   "peerDependencies": {
-    "eslint": "^9.0.0 || ^10.0.0"
+    "@eslint/js": "^9.0.0 || ^10.0.0",
+    "@stylistic/eslint-plugin": "^4.0.0 || ^5.0.0",
+    "@vue/eslint-config-prettier": "^10.0.0",
+    "@vue/eslint-config-typescript": "^14.0.0",
+    "eslint": "^9.0.0 || ^10.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-import-x": "^4.0.0",
+    "eslint-plugin-vue": "^10.0.0",
+    "typescript-eslint": "^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@eslint/js": {
+      "optional": true
+    },
+    "@stylistic/eslint-plugin": {
+      "optional": true
+    },
+    "eslint-config-prettier": {
+      "optional": true
+    },
+    "eslint-plugin-import-x": {
+      "optional": true
+    },
+    "typescript-eslint": {
+      "optional": true
+    },
+    "eslint-plugin-vue": {
+      "optional": true
+    },
+    "@vue/eslint-config-typescript": {
+      "optional": true
+    },
+    "@vue/eslint-config-prettier": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@typescript-eslint/utils": "^8.57.2"
   },
   "devDependencies": {
-    "@typescript-eslint/rule-tester": "^8.57.2",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^25.5.0",
     "@typescript-eslint/parser": "^8.57.2",
+    "@typescript-eslint/rule-tester": "^8.57.2",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.7.0",
     "eslint": "^10.1.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-vue": "^10.8.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.2",
     "vitest": "^4.1.2"
   }
 }
