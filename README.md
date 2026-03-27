@@ -3,7 +3,7 @@
 Custom ESLint plugin with auto-fixable code style rules and shareable configs for TypeScript and Vue
 projects.
 
-Requires ESLint 9+ flat config.
+Requires ESLint 9 / 10 flat config.
 
 ## Table of Contents
 
