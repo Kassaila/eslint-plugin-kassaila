@@ -15,7 +15,10 @@ ESM/CJS.
 - `npm run lint` — lint src/ and **tests**/ with ESLint
 - `npm test` — run vitest in watch mode
 - `npm run test:run` — run vitest once
-- `npx vitest run __tests__/<rule-name>.test.ts` — run a single test file
+- `npm run check:all` — format + lint + typecheck + test + build (full CI check)
+
+Pre-commit hook runs `lint-staged` (eslint --fix + prettier on staged files). Commit messages are
+validated by commitlint with `@commitlint/config-conventional`.
 
 ## Architecture
 
@@ -38,34 +41,12 @@ flat config usage.
   `@vue/eslint-config-prettier`) and opinionated Vue rules (Style Guide A/B/C).
 
 **Dynamic dependency detection**: configs use `createRequire` + `resolve()` to check if optional
-peer dependencies are installed. Each block (presets, rules, plugins) is conditionally included only
-when the corresponding package is available.
+peer dependencies are installed. Each block is conditionally included only when the corresponding
+package is available.
 
 **Tests** use `@typescript-eslint/rule-tester` integrated with vitest via `__tests__/setup.ts`. Each
 test file calls `ruleTester.run()` with `valid` and `invalid` arrays. Invalid cases must specify
 `errors` (by messageId) and `output` (the auto-fixed result).
-
-## Structure
-
-```
-src/
-├── index.ts              # Plugin entry, rules, configs.recommended
-├── configs/
-│   ├── ts.ts             # tsConfig (TS + JS preset)
-│   └── vue.ts            # vueConfig (extends tsConfig + Vue)
-└── rules/
-    ├── jsdoc-comment-style.ts
-    ├── prefer-arrow-without-this.ts
-    └── switch-case-braces.ts
-```
-
-## Rules
-
-| Rule                        | Purpose                                                                                    |
-| --------------------------- | ------------------------------------------------------------------------------------------ |
-| `jsdoc-comment-style`       | Enforces `/** */` over `//`, forbids inline comments, validates TODO format                |
-| `prefer-arrow-without-this` | Converts functions to arrows when `this` is unused (skips methods/constructors/generators) |
-| `switch-case-braces`        | Requires braces around case/default clauses                                                |
 
 ## Adding a New Rule
 
